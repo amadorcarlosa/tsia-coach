@@ -13,7 +13,7 @@
     <PackageReference Include="Aspire.StackExchange.Redis.OutputCaching" Version="13.4.6" />
     <PackageReference Include="Azure.AI.OpenAI" Version="2.*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.*" />
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="10.*">
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="11.*-*">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
