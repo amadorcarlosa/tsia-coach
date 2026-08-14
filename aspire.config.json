@@ -1,0 +1,6 @@
+{
+  "appHost": {
+    "path": "tsia-coach.AppHost/tsia-coach.AppHost.csproj"
+  },
+  "channel": "stable"
+}

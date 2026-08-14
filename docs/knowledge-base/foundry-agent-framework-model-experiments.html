@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foundry and Agent Framework Model Experiments</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --text: #182033;
+      --muted: #5e687c;
+      --line: #dce2ec;
+      --accent: #3457d5;
+      --good: #087f5b;
+      --pending: #b26a00;
+      --danger: #b42318;
+      --code: #111827;
+      --code-text: #e5edff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d111b;
+        --panel: #151b28;
+        --text: #edf2ff;
+        --muted: #a8b2c7;
+        --line: #2d3748;
+        --accent: #91a7ff;
+        --good: #69dbb2;
+        --pending: #ffd27a;
+        --danger: #ff8787;
+        --code: #080b12;
+        --code-text: #e5edff;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { max-width: 1080px; margin: 0 auto; padding: 48px 24px 80px; }
+    header, section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 3.4rem); }
+    h2 { margin-top: 0; }
+    p:last-child { margin-bottom: 0; }
+    .lede { color: var(--muted); font-size: 1.12rem; max-width: 78ch; }
+    .meta { color: var(--muted); font-size: .9rem; }
+    .status { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .card { border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+    .verified { border-left: 5px solid var(--good); }
+    .pending { border-left: 5px solid var(--pending); }
+    .warning { border-left: 5px solid var(--danger); }
+    .label { font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .verified .label { color: var(--good); }
+    .pending .label { color: var(--pending); }
+    .warning .label { color: var(--danger); }
+    code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    pre {
+      overflow-x: auto;
+      background: var(--code);
+      color: var(--code-text);
+      border-radius: 12px;
+      padding: 18px;
+      line-height: 1.5;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid var(--line); padding: 12px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; }
+    a { color: var(--accent); }
+    .flow { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre-wrap; }
+    .callout { border-left: 5px solid var(--accent); padding-left: 16px; }
+    .table-wrap { overflow-x: auto; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="meta">TSIA Coach knowledge base · Updated August 14, 2026</p>
+    <h1>Foundry and Agent Framework model experiments</h1>
+    <p class="lede">A dated record of the endpoint experiments, authentication design, embedding verification, typed deployment catalog, model capability research, and frontend-facing model API built for TSIA Coach.</p>
+  </header>
+
+  <section>
+    <h2>Current outcome</h2>
+    <p>The experiments established a practical boundary: Foundry chat models use the project endpoint through <code>AIProjectClient</code>, while raw embeddings use the Azure OpenAI resource endpoint through <code>AzureOpenAIClient</code>. Both clients reuse the same <code>TokenCredential</code>. A typed, static deployment catalog is now exposed to the frontend at <code>GET /api/models</code>.</p>
+    <div class="flow">one TokenCredential
+    ├── AIProjectClient      ──▶ Foundry project endpoint ──▶ AIAgent responses
+    └── AzureOpenAIClient    ──▶ Azure OpenAI endpoint    ──▶ embedding vectors</div>
+  </section>
+
+  <section>
+    <h2>Experiment ledger</h2>
+    <div class="status">
+      <article class="card verified">
+        <div class="label">Verified</div>
+        <h3>GPT through Foundry</h3>
+        <p><code>AIProjectClient.AsAIAgent()</code> works with the project endpoint and Microsoft Entra authentication.</p>
+      </article>
+      <article class="card verified">
+        <div class="label">Verified</div>
+        <h3>DeepSeek through Foundry</h3>
+        <p>The same project endpoint, credential, and agent call site work by changing the deployment name.</p>
+      </article>
+      <article class="card verified">
+        <div class="label">Verified</div>
+        <h3>Text embeddings</h3>
+        <p><code>text-embedding-3-small</code> returned a 1,536-dimensional vector from C#.</p>
+      </article>
+      <article class="card verified">
+        <div class="label">Verified</div>
+        <h3>Model catalog API</h3>
+        <p><code>GET /api/models</code> returns the eleven configured deployments as frontend-friendly JSON.</p>
+      </article>
+      <article class="card pending">
+        <div class="label">Pending</div>
+        <h3>Claude invocation</h3>
+        <p>Claude deployments exist in the catalog, but the exact project Responses versus Anthropic Messages behavior still needs a focused invocation test.</p>
+      </article>
+      <article class="card pending">
+        <div class="label">Pending</div>
+        <h3>Richer capability tests</h3>
+        <p>Image input, tool calling, structured output, streaming, computer use, and provider-specific behavior should be smoke-tested per deployment.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Endpoint map</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Purpose</th><th>Endpoint shape</th><th>.NET client</th></tr></thead>
+        <tbody>
+          <tr><td>Foundry agents and Responses API</td><td><code>https://&lt;resource&gt;.services.ai.azure.com/api/projects/&lt;project&gt;</code></td><td><code>AIProjectClient</code></td></tr>
+          <tr><td>Azure OpenAI embeddings</td><td><code>https://&lt;resource&gt;.openai.azure.com/</code></td><td><code>AzureOpenAIClient</code></td></tr>
+          <tr><td>Native Claude Messages API</td><td><code>https://&lt;resource&gt;.services.ai.azure.com/anthropic</code></td><td>Anthropic SDK or REST</td></tr>
+          <tr><td>Configured frontend model catalog</td><td><code>/api/models</code></td><td>ASP.NET Core Minimal API</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <p>The Foundry project endpoint does not currently expose raw embedding generation through <code>AIProjectClient</code>. The separate embedding endpoint is an Azure service boundary, not a failure of the application abstraction.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Verified C# agent and embedding flow</h2>
+    <pre><code>AIAgent agent =
+    new AIProjectClient(
+        new Uri(projectEndpoint),
+        tokenCredential)
+    .AsAIAgent(
+        model: FoundryDeploymentCatalog.DeepSeek.V4Pro.Value,
+        name: "TestAgent",
+        instructions: "You are a helpful assistant. Be concise.");
+
+var response = await agent.RunAsync(
+    "What are three places to visit in Tegucigalpa?");
+
+IEmbeddingGenerator&lt;string, Embedding&lt;float&gt;&gt; embeddingGenerator =
+    new AzureOpenAIClient(
+        new Uri(azureOpenAIEndpoint),
+        tokenCredential)
+    .GetEmbeddingClient(
+        FoundryDeploymentCatalog.Embeddings.Small3.Value)
+    .AsIEmbeddingGenerator();
+
+ReadOnlyMemory&lt;float&gt; vector =
+    await embeddingGenerator.GenerateVectorAsync(response.Text);
+
+Console.WriteLine($"Embedding dimensions: {vector.Length}");
+// Verified output: Embedding dimensions: 1536</code></pre>
+    <p><code>AsIEmbeddingGenerator()</code> is an adapter from the concrete OpenAI <code>EmbeddingClient</code> to the provider-neutral <code>Microsoft.Extensions.AI.IEmbeddingGenerator&lt;string, Embedding&lt;float&gt;&gt;</code> abstraction.</p>
+  </section>
+
+  <section>
+    <h2>Authentication by environment</h2>
+    <p>The application models credential selection as a C# discriminated union. Downstream clients receive only a <code>TokenCredential</code> and do not need to know how it was obtained.</p>
+    <pre><code>public sealed record LocalDevelopment;
+public sealed record ManagedIdentity(string ClientId);
+public sealed record FederatedWorkloadIdentity(
+    string TenantId,
+    string ClientId,
+    string TokenFilePath);
+
+public union CredentialEnvironment(
+    LocalDevelopment,
+    ManagedIdentity,
+    FederatedWorkloadIdentity);</code></pre>
+    <table>
+      <thead><tr><th>Environment</th><th>Credential</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>Local development</td><td><code>AzureCliCredential</code></td><td>Uses the developer's explicit <code>az login</code> session.</td></tr>
+        <tr><td>Azure hosted workload</td><td><code>ManagedIdentityCredential</code></td><td>User-assigned managed identity selected by client ID.</td></tr>
+        <tr><td>OIDC workload</td><td><code>WorkloadIdentityCredential</code></td><td>Federated tenant, client, and projected token file.</td></tr>
+      </tbody>
+    </table>
+    <p>An uninitialized union should throw <code>InvalidOperationException</code>. Credential construction itself does not return <code>null</code>; authentication failures occur when the client requests a token.</p>
+  </section>
+
+  <section>
+    <h2>Aspire configuration</h2>
+    <p>The Aspire CLI syntax for AppHost user secrets is:</p>
+    <pre><code>aspire secret set "azure-openai-endpoint" "https://GPrade.openai.azure.com/"
+aspire secret get "azure-openai-endpoint"
+aspire secret list
+aspire secret path</code></pre>
+    <p>An endpoint is normally configuration rather than sensitive data. API keys are secrets; Entra-based local development does not require an API-key secret. Aspire parameters must be mapped into the Server resource when the Server expects environment variables.</p>
+  </section>
+
+  <section>
+    <h2>Typed deployment catalog</h2>
+    <p>The catalog is a curated application allow-list. Nested static members preserve progressive IntelliSense, while descriptors carry metadata used by the frontend.</p>
+    <pre><code>FoundryDeploymentCatalog.Gpt.FiveSixSol
+FoundryDeploymentCatalog.Claude.OpusFive
+FoundryDeploymentCatalog.DeepSeek.V4Pro
+FoundryDeploymentCatalog.Embeddings.Small3</code></pre>
+    <pre><code>public sealed record FoundryDeploymentDescriptor(
+    FoundryDeploymentName Name,
+    string ModelName,
+    string ModelVersion,
+    string DisplayName,
+    ModelProvider Provider,
+    ModelLifecycle Lifecycle,
+    IReadOnlyList&lt;ModelApi&gt; SupportedApis,
+    IReadOnlyList&lt;ModelOperation&gt; Operations,
+    IReadOnlyList&lt;ModelModality&gt; InputModalities,
+    IReadOnlyList&lt;ModelModality&gt; OutputModalities,
+    IReadOnlyList&lt;ModelFeature&gt; Features,
+    IReadOnlyList&lt;InteractionMode&gt; InteractionModes);</code></pre>
+    <p><code>FoundryDeploymentName</code> provides semantic type safety. Constructor validation can reject empty strings, but only an Azure lookup or invocation can prove that a deployment currently exists.</p>
+  </section>
+
+  <section>
+    <h2>Capability taxonomy</h2>
+    <p>Operations, modalities, features, and interaction modes are separate dimensions. A live voice agent, for example, is chat with audio input, audio output, and realtime interaction.</p>
+    <pre><code>public enum ModelApi
+{
+    Responses,
+    ChatCompletions,
+    Embeddings,
+    AnthropicMessages,
+    Realtime,
+    Audio
+}
+
+public enum ModelOperation
+{
+    Chat,
+    Embedding,
+    SpeechToText,
+    TextToSpeech
+}
+
+public enum ModelModality
+{
+    Text,
+    Image,
+    Audio,
+    Video
+}
+
+public enum ModelFeature
+{
+    ToolCalling,
+    StructuredOutput,
+    Reasoning,
+    FileInput,
+    ComputerUse,
+    JsonOutput
+}
+
+public enum InteractionMode
+{
+    RequestResponse,
+    Streaming,
+    Realtime
+}</code></pre>
+    <p><code>ModelApi</code> answers which protocol surface can invoke the model. It is a separate dimension from what the model does (<code>ModelOperation</code>), what data it accepts (<code>ModelModality</code>), what additional capability it has (<code>ModelFeature</code>), and how responses are delivered (<code>InteractionMode</code>). <code>JsonOutput</code> means JSON can be returned. <code>StructuredOutput</code> means a supplied JSON Schema can be enforced. They are not interchangeable.</p>
+  </section>
+
+  <section>
+    <h2>Observed Foundry inventory</h2>
+    <p>Azure CLI was queried read-only against Foundry resource <code>GPrade</code> in resource group <code>MathTabla</code>. Deployment names are stable application addresses; underlying model names and versions may differ.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Deployment</th><th>Underlying model</th><th>Version</th><th>Lifecycle observed</th></tr></thead>
+        <tbody>
+          <tr><td><code>gpt-5.6-sol</code></td><td><code>gpt-5.6-sol</code></td><td>2026-07-09</td><td>Generally available</td></tr>
+          <tr><td><code>gpt-5-chat</code></td><td><code>gpt-chat-latest</code></td><td>2026-05-05</td><td>Preview</td></tr>
+          <tr><td><code>gpt-5-nano</code></td><td><code>gpt-5-nano</code></td><td>2025-08-07</td><td>Generally available</td></tr>
+          <tr><td><code>gpt-4.1</code></td><td><code>gpt-4.1</code></td><td>2025-04-14</td><td>Legacy</td></tr>
+          <tr><td><code>claude-opus-5</code></td><td><code>claude-opus-5</code></td><td>2</td><td>Generally available in account inventory</td></tr>
+          <tr><td><code>claude-sonnet-4-5</code></td><td><code>claude-sonnet-4-5</code></td><td>20250929</td><td>Generally available in account inventory</td></tr>
+          <tr><td><code>claude-sonnet-4-5-2</code></td><td><code>claude-sonnet-4-5</code></td><td>20250929</td><td>Generally available in account inventory</td></tr>
+          <tr><td><code>DeepSeek-V4-Pro</code></td><td><code>DeepSeek-V4-Pro</code></td><td>2026-04-23</td><td>Generally available</td></tr>
+          <tr><td><code>DeepSeek-R1-0528</code></td><td><code>DeepSeek-R1-0528</code></td><td>1</td><td>Deprecated by account inventory</td></tr>
+          <tr><td><code>text-embedding-3-small</code></td><td><code>text-embedding-3-small</code></td><td>1</td><td>Generally available</td></tr>
+          <tr><td><code>text-embedding-3-large-919921</code></td><td><code>text-embedding-3-large</code></td><td>1</td><td>Generally available</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <pre><code>az cognitiveservices account list-models \
+  --resource-group MathTabla \
+  --name GPrade \
+  --output json</code></pre>
+  </section>
+
+  <section>
+    <h2>Capability corrections from model documentation</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Model</th><th>Supported APIs</th><th>Confirmed inputs</th><th>Confirmed features</th><th>Important limits</th></tr></thead>
+        <tbody>
+          <tr><td>GPT 5.6 Sol</td><td>Responses, ChatCompletions</td><td>Text, image</td><td>Reasoning, tool calling, structured output, computer use, FileInput</td><td>Prefer Responses API for tool calling with reasoning.</td></tr>
+          <tr><td>GPT Chat Latest 2026-05-05</td><td>Responses, ChatCompletions</td><td>Text confirmed</td><td>Reasoning, tool calling, structured output</td><td>Preview lifecycle.</td></tr>
+          <tr><td>GPT 5 Nano</td><td>Responses, ChatCompletions</td><td>Text, image</td><td>Reasoning, tool calling, structured output</td><td>Text output.</td></tr>
+          <tr><td>GPT 4.1</td><td>Responses, ChatCompletions</td><td>Text, image</td><td>Tool calling, structured output, streaming</td><td>Legacy in the account inventory.</td></tr>
+          <tr><td>Claude Sonnet 4.5</td><td>AnthropicMessages</td><td>Text, image, code/files</td><td>Extended thinking, tool use, file/PDF input, computer use</td><td>Both deployments point to the same model/version.</td></tr>
+          <tr><td>DeepSeek V4 Pro</td><td>Responses</td><td>Text</td><td>Reasoning, JSON response format</td><td>No tool calling; JSON format is not JSON-Schema structured output.</td></tr>
+          <tr><td>DeepSeek R1 0528</td><td>Responses</td><td>Text</td><td>Reasoning</td><td>No tools or structured output; deprecated/retired.</td></tr>
+          <tr><td>Embedding 3 Small</td><td>Embeddings</td><td>Text</td><td>Embedding generation</td><td>8,192 input tokens, 1,536 default dimensions, 2,048 batch inputs.</td></tr>
+          <tr><td>Embedding 3 Large</td><td>Embeddings</td><td>Text</td><td>Embedding generation</td><td>8,192 input tokens, 3,072 default dimensions, 2,048 batch inputs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <p>Capability metadata has three evidence levels: Azure account inventory, published model-card documentation, and a successful request against the exact deployment. The application catalog should not claim untested capabilities merely because a model family usually supports them.</p>
+    </div>
+    <div class="callout">
+      <p>A file type is not automatically a model modality, and an API feature is not automatically supported by every model available through that API. Azure processes PDFs by extracting text and rendering pages as images. PDF is therefore a supported file format (gated by <code>FileInput</code>), not a fundamental model modality.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Frontend model endpoint</h2>
+    <p>The ASP.NET Core route group now exposes the configured catalog at <code>GET /api/models</code>.</p>
+    <pre><code>public static RouteGroupBuilder MapModels(
+    this RouteGroupBuilder group)
+{
+    group.MapGet("/models", () =&gt;
+    {
+        FoundryDeploymentResponse[] models =
+            FoundryDeploymentCatalog.All
+                .Select(deployment =&gt; deployment.ToResponse())
+                .ToArray();
+
+        return TypedResults.Ok(models);
+    })
+    .WithName("GetModels")
+    .WithTags("Models");
+
+    return group;
+}</code></pre>
+    <pre><code>var api = app.MapGroup("/api");
+api.MapModels();</code></pre>
+    <p>The frontend uses <code>id</code> as the deployment selection value. The server should resolve that value against <code>FoundryDeploymentCatalog.All</code> before invoking Foundry, preventing arbitrary model identifiers from being forwarded.</p>
+  </section>
+
+  <section>
+    <h2>Architectural decisions</h2>
+    <table>
+      <thead><tr><th>Concern</th><th>Decision</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Provider SDK differences</td><td>Keep provider-neutral domain metadata, but use the correct concrete service client.</td><td>Agent responses and embeddings have different Azure endpoints.</td></tr>
+        <tr><td>Authentication</td><td>Resolve once to <code>TokenCredential</code>.</td><td>The same credential can be reused by both Azure clients.</td></tr>
+        <tr><td>Deployment selection</td><td>Static typed catalog and server-side allow-list.</td><td>Stable IntelliSense, controlled frontend choices, and protection against arbitrary IDs.</td></tr>
+        <tr><td>Capabilities</td><td>Separate API surface, operation, modality, feature, and interaction mode.</td><td>API protocol, chat operation, image input, tool use, and realtime transport describe different dimensions.</td></tr>
+        <tr><td>Simple labels</td><td>Enums.</td><td>Labels carry no variant-specific data.</td></tr>
+        <tr><td>Variant-specific configuration</td><td>Discriminated unions when needed.</td><td>Useful when variants carry different values, as credential environments do.</td></tr>
+        <tr><td>Deployment versus model identity</td><td>Store both.</td><td>Deployment aliases can point to different underlying model names and versions.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Verification status levels</h2>
+    <p>Capability metadata has three evidence levels. The application catalog should track which level supports each claim.</p>
+    <table>
+      <thead><tr><th>Level</th><th>Meaning</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Documented</strong></td><td>Published model-card or Microsoft documentation claims support.</td><td>Reference URL or page title.</td></tr>
+        <tr><td><strong>Deployment-tested</strong></td><td>A successful request against the exact Foundry deployment confirmed the behavior.</td><td>Date and test description.</td></tr>
+        <tr><td><strong>Unverified</strong></td><td>Neither documentation nor a live test supports the claim.</td><td>Absence of evidence.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Next checkpoints</h2>
+    <ol>
+      <li>Resolve frontend-submitted model IDs against the server catalog.</li>
+      <li>Move model invocation out of application startup and into a service or focused test endpoint.</li>
+      <li>Smoke-test Claude through the project endpoint and native Anthropic endpoint.</li>
+      <li>Test image input, structured output, tool calling, and streaming against exact deployments.</li>
+      <li>Add embedding-specific metadata such as dimensions and token limits without forcing it onto chat descriptors.</li>
+      <li>Compare existing knowledge retrieval with small embeddings, large embeddings, and a hybrid approach.</li>
+      <li>Define retirement criteria for deprecated, legacy, preview, and duplicate deployments.</li>
+      <li>Verify <code>SupportedApis</code> claims per deployment: send one direct request through each declared API surface.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <ul>
+      <li><a href="https://learn.microsoft.com/en-us/agent-framework/overview/">Microsoft Agent Framework overview</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/agent-framework/integrations/">Agent Framework integrations and RAG context providers</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai">Microsoft.Extensions.AI abstractions</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/sdk-overview">Microsoft Foundry SDKs and endpoints</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/embeddings">Generate embeddings with Azure OpenAI</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/rest/api/aifoundry/accountmanagement/accounts/list-models?view=rest-aifoundry-accountmanagement-2025-06-01">Foundry account models API</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/claude-models?tabs=pay-go">Claude models in Microsoft Foundry</a></li>
+      <li><a href="https://learn.microsoft.com/en-gb/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-direct-others">DeepSeek models sold by Azure</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/models">Azure OpenAI model capabilities</a></li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

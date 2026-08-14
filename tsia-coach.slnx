@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="tsia-coach.AppHost/tsia-coach.AppHost.csproj" />
+  <Project Path="tsia-coach.Server/tsia-coach.Server.csproj" />
+  <Project Path="TsiaCoach.Domain/TsiaCoach.Domain.csproj" />
+  <Project Path="TsiaCoach.Shared/TsiaCoach.Shared.csproj" />
+</Solution>

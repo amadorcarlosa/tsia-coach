@@ -1,0 +1,24 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.4.6">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net11.0</TargetFramework>
+    <LangVersion>preview</LangVersion> 
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>a8e97953-4f7c-4d15-9e29-4231d7b2116e</UserSecretsId>
+    <NoWarn>$(NoWarn);ASPIREJAVASCRIPT001</NoWarn>
+      <EnablePreviewFeatures>true</EnablePreviewFeatures>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\tsia-coach.Server\tsia-coach.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.4.6" />
+    <PackageReference Include="Aspire.Hosting.Redis" Version="13.4.6" />
+     <ProjectReference Include="..\TsiaCoach.Shared\TsiaCoach.Shared.csproj" 
+      IsAspireProjectResource="false"/>
+  </ItemGroup>
+</Project>
