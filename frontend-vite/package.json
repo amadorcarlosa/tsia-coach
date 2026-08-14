@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "generate:api": "openapi-typescript ../openapi/tsia-coach.Server.json -o src/api/schema.d.ts",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -26,6 +27,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "openapi-typescript": "^7.13.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.1",
     "vite": "^8.0.0"

@@ -1,0 +1,236 @@
+{
+  "openapi": "3.2.0",
+  "info": {
+    "title": "tsia-coach.Server | v1",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/models": {
+      "get": {
+        "tags": [
+          "Models"
+        ],
+        "operationId": "GetModels",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FoundryDeploymentResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/weatherforecast": {
+      "get": {
+        "tags": [
+          "tsia-coach.Server"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FoundryDeploymentResponse": {
+        "required": [
+          "id",
+          "modelName",
+          "modelVersion",
+          "displayName",
+          "provider",
+          "lifecycle",
+          "supportedApis",
+          "operations",
+          "inputModalities",
+          "outputModalities",
+          "features",
+          "interactionModes"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "modelName": {
+            "type": "string"
+          },
+          "modelVersion": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ModelProvider"
+          },
+          "lifecycle": {
+            "$ref": "#/components/schemas/ModelLifecycle"
+          },
+          "supportedApis": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelApi"
+            }
+          },
+          "operations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelOperation"
+            }
+          },
+          "inputModalities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelModality"
+            }
+          },
+          "outputModalities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelModality"
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelFeature"
+            }
+          },
+          "interactionModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InteractionMode"
+            }
+          }
+        }
+      },
+      "InteractionMode": {
+        "enum": [
+          "RequestResponse",
+          "Streaming",
+          "Realtime"
+        ]
+      },
+      "ModelApi": {
+        "enum": [
+          "Responses",
+          "ChatCompletions",
+          "Embeddings",
+          "AnthropicMessages",
+          "Realtime",
+          "Audio"
+        ]
+      },
+      "ModelFeature": {
+        "enum": [
+          "ToolCalling",
+          "StructuredOutput",
+          "Reasoning",
+          "FileInput",
+          "ComputerUse",
+          "JsonOutput"
+        ]
+      },
+      "ModelLifecycle": {
+        "enum": [
+          "GenerallyAvailable",
+          "Preview",
+          "Legacy",
+          "Deprecated"
+        ]
+      },
+      "ModelModality": {
+        "enum": [
+          "Text",
+          "Image",
+          "Audio",
+          "Video"
+        ]
+      },
+      "ModelOperation": {
+        "enum": [
+          "Chat",
+          "Embedding",
+          "SpeechToText",
+          "TextToSpeech"
+        ]
+      },
+      "ModelProvider": {
+        "enum": [
+          "OpenAI",
+          "Anthropic",
+          "DeepSeek",
+          "Google",
+          "Microsoft"
+        ]
+      },
+      "WeatherForecast": {
+        "required": [
+          "date",
+          "temperatureC",
+          "summary"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "summary": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "temperatureF": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Models"
+    },
+    {
+      "name": "tsia-coach.Server"
+    }
+  ]
+}
