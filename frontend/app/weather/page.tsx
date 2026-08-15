@@ -8,19 +8,13 @@ export const dynamic = "force-dynamic";
 
 async function getForecasts(): Promise<WeatherForecast[]> {
   const apiUrl = process.env.API_URL;
-
-  if (!apiUrl) {
-    return [];
-  }
+  if (!apiUrl) return [];
 
   const response = await fetch(`${apiUrl}/api/weatherforecast`, {
     cache: "no-store",
   });
 
-  if (!response.ok) {
-    return [];
-  }
-
+  if (!response.ok) return [];
   return response.json();
 }
 
@@ -29,26 +23,24 @@ export default async function WeatherPage() {
 
   return (
     <>
-      <div className="h-0.5 bg-gradient-to-r from-teal-primary via-sky-400/60 to-transparent" />
+      <div className="mt-accent-strip" />
       <Navbar />
 
-      <section className="mx-auto max-w-[800px] px-6 pt-16 pb-20">
+      <section className="w-full mx-auto max-w-content px-6 pt-16 pb-20">
         <div className="mb-2">
           <Link
             href="/"
-            className="text-sm font-medium text-text-secondary hover:text-teal-primary transition-colors"
+            className="text-sm font-medium text-ink-sub hover:text-primary-600 transition-colors no-underline"
           >
             ← Back to home
           </Link>
         </div>
 
-        <div className="text-xs font-semibold uppercase tracking-[0.22em] text-text-muted mb-3">
-          Aspire demo · ASP.NET backend
-        </div>
-        <h1 className="text-[2rem] font-semibold tracking-tight leading-snug">
+        <div className="mt-eyebrow mb-3">Aspire demo · ASP.NET backend</div>
+        <h1 className="text-3xl font-semibold tracking-tight leading-snug">
           Weather forecast
         </h1>
-        <p className="mt-2 max-w-[520px] text-base leading-relaxed text-text-secondary mb-8">
+        <p className="mt-2 max-w-lg text-base leading-relaxed text-ink-sub mb-8">
           Server-rendered data from the ASP.NET Core API, styled to match the
           TSIA Coach design system. Refresh to get new random forecasts.
         </p>
@@ -58,36 +50,34 @@ export default async function WeatherPage() {
         <div className="mt-6 flex items-center gap-3">
           <Link
             href="/weather"
-            className="rounded-xl bg-teal-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-teal-hover"
+            className="rounded-lg bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-600 no-underline"
           >
             Refresh forecasts
           </Link>
-          <div className="text-sm text-text-muted">
+          <div className="text-sm text-ink-muted">
             {forecasts.length} forecasts · cached 5s
           </div>
         </div>
 
         {/* API info card */}
-        <div className="mt-10 rounded-xl border border-border bg-surface-card p-5 shadow-sm">
-          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-text-muted mb-3">
-            API details
-          </div>
+        <div className="mt-panel mt-10 p-5">
+          <div className="mt-eyebrow mb-3">API details</div>
           <div className="grid gap-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-text-secondary">Endpoint</span>
-              <code className="font-mono text-xs text-text-muted">
+              <span className="text-ink-sub">Endpoint</span>
+              <code className="text-xs text-ink-muted" style={{ fontFamily: "var(--font-code)" }}>
                 GET /api/weatherforecast
               </code>
             </div>
             <div className="flex justify-between">
-              <span className="text-text-secondary">Cache</span>
-              <code className="font-mono text-xs text-text-muted">
+              <span className="text-ink-sub">Cache</span>
+              <code className="text-xs text-ink-muted" style={{ fontFamily: "var(--font-code)" }}>
                 Redis output cache · 5s TTL
               </code>
             </div>
             <div className="flex justify-between">
-              <span className="text-text-secondary">Rendering</span>
-              <code className="font-mono text-xs text-text-muted">
+              <span className="text-ink-sub">Rendering</span>
+              <code className="text-xs text-ink-muted" style={{ fontFamily: "var(--font-code)" }}>
                 Server component · no-store fetch
               </code>
             </div>

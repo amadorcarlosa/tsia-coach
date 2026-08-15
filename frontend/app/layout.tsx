@@ -3,13 +3,13 @@ import { Source_Sans_3, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const sourceSans = Source_Sans_3({
-  variable: "--font-sans",
+  variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+  variable: "--font-code",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });

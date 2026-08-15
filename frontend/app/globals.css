@@ -1,68 +1,155 @@
 @import 'tailwindcss';
+@import './tokens.css';
 
+/*
+ * ─── Static scales ───
+ * Constant values — no dark-mode override needed.
+ * Plain @theme so Tailwind inlines the literal color.
+ */
 @theme {
-  --color-teal-primary: #14b8a6;
-  --color-teal-hover: #0d9488;
-  --color-teal-active: #0f766e;
-  --color-teal-light: rgba(20, 184, 166, 0.08);
-  --color-teal-lighter: rgba(20, 184, 166, 0.14);
+  /* Primary palette */
+  --color-primary-50:  #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
 
-  --color-surface: #f7f7f8;
-  --color-surface-card: #ffffff;
-  --color-border: rgba(0, 0, 0, 0.1);
-  --color-border-strong: rgba(0, 0, 0, 0.18);
+  /* Accents */
+  --color-purple-500: #7c3aed;
+  --color-blue-600:   #1d4ed8;
+  --color-pink-500:   #ec4899;
+  --color-orange-500: #ea580c;
+  --color-coral-500:  #f97352;
+  --color-coral-600:  #c94831;
+  --color-green-600:  #16a34a;
+  --color-red-600:    #dc2626;
 
-  --color-text-primary: rgba(0, 0, 0, 0.88);
-  --color-text-secondary: rgba(0, 0, 0, 0.62);
-  --color-text-muted: rgba(0, 0, 0, 0.45);
-  --color-text-faint: rgba(0, 0, 0, 0.3);
+  /* Radii — override Tailwind defaults to match MathTabla */
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  18px;
 
-  --color-accent-purple: #7c3aed;
-  --color-accent-blue: #1d4ed8;
-  --color-accent-pink: #ec4899;
-  --color-accent-orange: #ea580c;
-  --color-accent-green: #16a34a;
-  --color-accent-red: #dc2626;
+  /* Layout tokens */
+  --max-width-page:    1200px;
+  --max-width-content: 800px;
 
-  --font-sans: 'Source Sans 3', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* Fonts — next/font writes --font-body / --font-code in layout.tsx */
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-mono: var(--font-code), ui-monospace, monospace;
+  --font-math: 'STIX Two Math', 'STIX Two Text', 'Cambria Math', Georgia, serif;
 }
 
-html {
-  height: 100%;
+/*
+ * ─── Surfaces, borders, text ───
+ * These switch on dark mode, so @theme inline emits var()
+ * references that resolve from :root at runtime.
+ */
+@theme inline {
+  --color-bg:          var(--mt-bg);
+  --color-bg-elevated: var(--mt-bg-elevated);
+  --color-bg-inset:    var(--mt-bg-inset);
+  --color-bg-overlay:  var(--mt-bg-overlay);
+
+  --color-edge:        var(--mt-border);
+  --color-edge-strong: var(--mt-border-strong);
+
+  --color-ink:         var(--mt-text);
+  --color-ink-sub:     var(--mt-text-sub);
+  --color-ink-muted:   var(--mt-text-muted);
+  --color-ink-faint:   var(--mt-text-faint);
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+/*
+ * ─── Base ───
+ * MUST be @layer base. Unlayered rules outrank @layer utilities,
+ * so a bare `* { margin: 0 }` here would silently kill every
+ * margin and padding utility on the site. Tailwind preflight already
+ * zeroes margin/padding and sets border-box — do not re-declare it.
+ */
+@layer base {
+  html {
+    height: 100%;
+    color-scheme: light;
+  }
+
+  body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: var(--mt-text);
+    background: var(--mt-bg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--mt-selection);
+  }
 }
 
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--color-text-primary);
-  background: var(--color-surface);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/*
+ * ─── Recipes ───
+ * @layer components so utilities still win — `mt-panel hover:border-primary-500`
+ * must be able to override the recipe's border.
+ */
+@layer components {
+  .mt-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--mt-text-muted);
+  }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+  .mt-accent-strip {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary-500) 0%,
+      rgba(56, 189, 248, 0.6) 50%,
+      transparent 100%
+    );
+  }
 
-a {
-  color: var(--color-teal-primary);
-  text-decoration: none;
-}
-a:hover {
-  color: var(--color-teal-hover);
-}
+  /*
+   * Translucent sticky chrome (navbar).
+   * -webkit-backdrop-filter must stay alongside the standard property:
+   * Safari (incl. iOS 18) still only honours the prefixed form.
+   */
+  .mt-overlay {
+    background: var(--mt-bg-overlay);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
 
-::selection {
-  background: #99f6e4;
+  .mt-panel {
+    background: var(--mt-bg-elevated);
+    border: 1px solid var(--mt-border);
+    border-radius: var(--mt-radius-xl);
+    box-shadow: var(--mt-shadow-sm);
+  }
+
+  .mt-board {
+    background-color: var(--mt-bg-elevated);
+    background-image:
+      linear-gradient(var(--mt-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--mt-grid-line) 1px, transparent 1px);
+    background-size: var(--mt-grid-size) var(--mt-grid-size);
+    border: 1px solid var(--mt-border);
+    border-radius: var(--mt-radius-2xl);
+    box-shadow: var(--mt-shadow-lg);
+  }
 }
