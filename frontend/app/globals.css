@@ -28,6 +28,12 @@
   --color-coral-600:  #c94831;
   --color-green-600:  #16a34a;
   --color-red-600:    #dc2626;
+  --color-navy-500:   #567daf;
+  --color-navy-700:   #334f76;
+  --color-amber-500:  #f59e0b;
+  --color-amber-700:  #b45309;
+  --color-slate-500:  #64748b;
+  --color-slate-600:  #475569;
 
   /* Radii — override Tailwind defaults to match MathTabla */
   --radius-sm:   6px;
@@ -39,6 +45,7 @@
   /* Layout tokens */
   --max-width-page:    1200px;
   --max-width-content: 800px;
+  --max-width-console: 1440px;
 
   /* Fonts — next/font writes --font-body / --font-code in layout.tsx */
   --font-sans: var(--font-body), system-ui, sans-serif;
@@ -120,6 +127,16 @@
       90deg,
       var(--color-primary-500) 0%,
       rgba(56, 189, 248, 0.6) 50%,
+      transparent 100%
+    );
+  }
+
+  .mt-accent-strip-console {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--color-navy-500) 0%,
+      rgb(20 184 166 / 0.6) 50%,
       transparent 100%
     );
   }
