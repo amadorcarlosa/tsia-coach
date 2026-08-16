@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=STIX+Two+Math&amp;display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f7f7f8; -webkit-font-smoothing: antialiased; }
+  a { color: #0d9488; text-decoration: none; }
+  a:hover { color: #0f766e; }
+  textarea, input, button { font-family: inherit; }
+  ::selection { background: #99f6e4; }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #f7f7f8; font-family: 'Source Sans 3', system-ui, sans-serif; color: rgba(0,0,0,0.88); padding-bottom: 88px;">
+
+  <div style="position: fixed; left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 90; display: flex; gap: 4px; padding: 4px; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border: 1px solid rgba(0,0,0,0.1); border-radius: 9999px; box-shadow: 0 10px 24px rgba(0,0,0,0.15);">
+    <button onClick="{{ goLanding }}" style="{{ swLanding }}">Landing</button>
+    <button onClick="{{ goAdmin }}" style="{{ swAdmin }}">Admin console</button>
+  </div>
+
+  <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <div style="height: 2px; background: linear-gradient(90deg, #14b8a6 0%, rgba(56,189,248,0.6) 50%, transparent 100%);"></div>
+    <header style="position: sticky; top: 0; z-index: 40; background: rgba(247,247,248,0.88); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.1);">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;">
+        <div style="display: flex; align-items: baseline; gap: 2px;">
+          <span style="font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em;">TSIA</span>
+          <span style="font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; color: #0d9488; border-bottom: 2px solid #14b8a6; padding-bottom: 1px;">Coach</span>
+        </div>
+        <nav style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; font-size: 0.9375rem; color: rgba(0,0,0,0.62);">
+          <a href="#how" style="color: inherit;" style-hover="color: rgba(0,0,0,0.88);">How it works</a>
+          <a href="#areas" style="color: inherit;" style-hover="color: rgba(0,0,0,0.88);">What's on the test</a>
+          <a href="#" style="color: inherit;" style-hover="color: rgba(0,0,0,0.88);">For advisors</a>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <a href="#" style="font-size: 0.9375rem; color: rgba(0,0,0,0.62);" style-hover="color: rgba(0,0,0,0.88);">Log in</a>
+          <button style="font-size: 0.9375rem; font-weight: 600; color: #fff; background: #14b8a6; border: none; border-radius: 12px; padding: 9px 16px; cursor: pointer; transition: background 140ms;" style-hover="background: #0d9488" style-active="background: #0f766e">Start free</button>
+        </div>
+      </div>
+    </header>
+
+    <section style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 56px; align-items: center;">
+      <div>
+        <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45); margin-bottom: 20px;">TSIA2 · College readiness math</div>
+        <h1 style="margin: 0; font-size: clamp(2.25rem, 5.2vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05;">The TSI is a gate.</h1>
+        <h1 style="margin: 10px 0 0; font-size: clamp(2.25rem, 5.2vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; color: #0d9488;">Not a measure.</h1>
+        <p style="margin: 24px 0 0; max-width: 440px; font-size: 1.125rem; line-height: 1.6; color: rgba(0,0,0,0.62); text-wrap: pretty;">You already know more math than this test is asking for. Step through it once with the scaffolding in place, clear the gate, and get on with your degree.</p>
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: 32px;">
+          <button style="font-size: 1rem; font-weight: 600; color: #fff; background: #14b8a6; border: none; border-radius: 12px; padding: 13px 22px; cursor: pointer; transition: background 140ms;" style-hover="background: #0d9488" style-active="background: #0f766e">Take the 12-question diagnostic →</button>
+          <button style="font-size: 1rem; font-weight: 500; color: rgba(0,0,0,0.88); background: transparent; border: 1px solid rgba(0,0,0,0.18); border-radius: 12px; padding: 13px 20px; cursor: pointer; transition: border-color 140ms, background 140ms;" style-hover="border-color: #14b8a6; background: rgba(20,184,166,0.08)">Watch a walkthrough</button>
+        </div>
+        <div style="margin-top: 22px; font-size: 0.875rem; color: rgba(0,0,0,0.45);">No account needed for the diagnostic. Takes about 15 minutes.</div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 18px; box-shadow: 0 10px 24px rgba(0,0,0,0.15); background-image: linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px); background-size: 32px 32px; padding: 28px 30px 30px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px;">
+          <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">Algebraic reasoning · Phase 2 of 4</div>
+          <div style="display: flex; gap: 5px;">
+            <div style="width: 26px; height: 4px; border-radius: 9999px; background: #14b8a6;"></div>
+            <div style="width: 26px; height: 4px; border-radius: 9999px; background: #14b8a6;"></div>
+            <div style="width: 26px; height: 4px; border-radius: 9999px; background: rgba(0,0,0,0.12);"></div>
+            <div style="width: 26px; height: 4px; border-radius: 9999px; background: rgba(0,0,0,0.12);"></div>
+          </div>
+        </div>
+
+        <p style="margin: 0; font-size: 1.0625rem; line-height: 1.65; color: rgba(0,0,0,0.88); text-wrap: pretty;">Last year, a bakery sold <span style="color: #7c3aed; font-weight: 600;">w</span> loaves of bread. This year, the bakery sold <span style="background: rgba(234,88,12,0.12); color: #ea580c; font-weight: 600; padding: 1px 4px; border-radius: 4px;">three more than twice</span> the number of loaves sold last year.</p>
+
+        <div style="margin-top: 26px; font-size: 0.8125rem; font-weight: 600; color: rgba(0,0,0,0.45); letter-spacing: 0.02em;">Match each phrase to its algebra.</div>
+
+        <div style="display: grid; gap: 10px; margin-top: 12px;">
+          <div style="display: grid; grid-template-columns: 1fr auto 128px; align-items: center; gap: 14px; background: rgba(255,255,255,0.86); border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 11px 14px;">
+            <span style="font-size: 0.9375rem; color: rgba(0,0,0,0.62);">loaves sold last year</span>
+            <span style="color: rgba(0,0,0,0.3);">→</span>
+            <span style="font-family: 'STIX Two Math', serif; font-size: 1.25rem; color: #7c3aed; text-align: center; background: rgba(124,58,237,0.08); border-radius: 8px; padding: 2px 0;">w</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr auto 128px; align-items: center; gap: 14px; background: rgba(255,255,255,0.86); border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 11px 14px;">
+            <span style="font-size: 0.9375rem; color: rgba(0,0,0,0.62);">twice that number</span>
+            <span style="color: rgba(0,0,0,0.3);">→</span>
+            <span style="font-family: 'STIX Two Math', serif; font-size: 1.25rem; color: #7c3aed; text-align: center; background: rgba(124,58,237,0.08); border-radius: 8px; padding: 2px 0;">2w</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr auto 128px; align-items: center; gap: 14px; background: rgba(20,184,166,0.06); border: 1px solid #14b8a6; border-radius: 12px; padding: 11px 14px;">
+            <span style="font-size: 0.9375rem; color: rgba(0,0,0,0.88); font-weight: 500;">three more than twice</span>
+            <span style="color: #14b8a6;">→</span>
+            <span style="font-family: 'STIX Two Math', serif; font-size: 1.25rem; color: rgba(0,0,0,0.88); text-align: center; background: #fff; border: 1px solid #14b8a6; border-radius: 8px; padding: 2px 0;">2w + 3</span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px;">
+          <button style="font-size: 0.875rem; font-weight: 500; color: rgba(0,0,0,0.62); background: transparent; border: 1px solid rgba(0,0,0,0.18); border-radius: 12px; padding: 9px 14px; cursor: pointer;" style-hover="border-color: #f97352; color: #c94831">I'm stuck</button>
+          <button style="font-size: 0.9375rem; font-weight: 600; color: #fff; background: #14b8a6; border: none; border-radius: 12px; padding: 10px 18px; cursor: pointer;" style-hover="background: #0d9488">Next phase →</button>
+        </div>
+      </div>
+    </section>
+
+    <section style="border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); background: #fff;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 40px 24px; display: flex; flex-wrap: wrap; gap: 32px 44px; align-items: center;">
+        <div style="display: flex; align-items: baseline; gap: 18px;">
+          <div>
+            <div style="font-size: 2.5rem; font-weight: 600; letter-spacing: -0.015em; color: rgba(0,0,0,0.45);">910</div>
+            <div style="font-size: 0.875rem; color: rgba(0,0,0,0.62);">typical placement</div>
+          </div>
+          <div style="font-size: 1.5rem; color: rgba(0,0,0,0.3);">→</div>
+          <div>
+            <div style="font-size: 2.5rem; font-weight: 600; letter-spacing: -0.015em; color: #0d9488;">950</div>
+            <div style="font-size: 0.875rem; color: rgba(0,0,0,0.62);">college ready</div>
+          </div>
+        </div>
+        <div style="width: 1px; min-height: 64px; background: rgba(0,0,0,0.1); align-self: stretch;"></div>
+        <div>
+          <p style="margin: 0; max-width: 560px; font-size: 1rem; line-height: 1.6; color: rgba(0,0,0,0.62); text-wrap: pretty;">Forty points is the difference between a semester of developmental math and starting the course you actually enrolled for. It is a gap in scaffolding, not in ability.</p>
+          <a href="#how" style="display: inline-block; margin-top: 12px; font-size: 0.9375rem; font-weight: 500;">See how a walkthrough is built →</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="areas" style="max-width: 1200px; margin: 0 auto; padding: 64px 24px 8px;">
+      <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">What's on the test · 4 areas</div>
+      <h2 style="margin: 14px 0 0; font-size: 2rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2;">Twenty questions. Four reporting categories.</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 18px; margin-top: 32px;">
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 22px; transition: border-color 140ms;" style-hover="border-color: #14b8a6">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #7c3aed;">01</div>
+          <div style="margin-top: 10px; font-size: 1.125rem; font-weight: 600;">Quantitative reasoning</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Ratios, percents, proportional change, unit rates.</p>
+          <div style="margin-top: 16px; font-size: 0.8125rem; color: rgba(0,0,0,0.45);">9 walkthroughs</div>
+        </div>
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 22px; transition: border-color 140ms;" style-hover="border-color: #14b8a6">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #1d4ed8;">02</div>
+          <div style="margin-top: 10px; font-size: 1.125rem; font-weight: 600;">Algebraic reasoning</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Linear equations, expressions from words, systems.</p>
+          <div style="margin-top: 16px; font-size: 0.8125rem; color: rgba(0,0,0,0.45);">14 walkthroughs</div>
+        </div>
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 22px; transition: border-color 140ms;" style-hover="border-color: #14b8a6">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ec4899;">03</div>
+          <div style="margin-top: 10px; font-size: 1.125rem; font-weight: 600;">Geometry &amp; measurement</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Area, volume, similarity, the coordinate plane.</p>
+          <div style="margin-top: 16px; font-size: 0.8125rem; color: rgba(0,0,0,0.45);">8 walkthroughs</div>
+        </div>
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 22px; transition: border-color 140ms;" style-hover="border-color: #14b8a6">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ea580c;">04</div>
+          <div style="margin-top: 10px; font-size: 1.125rem; font-weight: 600;">Probability &amp; statistics</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Reading data, center and spread, simple probability.</p>
+          <div style="margin-top: 16px; font-size: 0.8125rem; color: rgba(0,0,0,0.45);">6 walkthroughs</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" style="max-width: 1200px; margin: 0 auto; padding: 64px 24px 80px;">
+      <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">Phase outline · 4 steps total</div>
+      <h2 style="margin: 14px 0 0; font-size: 2rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2;">Every walkthrough runs the same four phases.</h2>
+      <p style="margin: 14px 0 0; max-width: 640px; font-size: 1.125rem; line-height: 1.6; color: rgba(0,0,0,0.62); text-wrap: pretty;">You act at each one. The scaffold holds the parts you are not working on yet, so the only thing in front of you is the step you are actually doing.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 1px; margin-top: 36px; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; overflow: hidden; background: rgba(0,0,0,0.1);">
+        <div style="padding: 26px 24px; background: #fff;">
+          <div style="width: 28px; height: 28px; border-radius: 9999px; background: rgba(20,184,166,0.12); color: #0f766e; font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; justify-content: center;">1</div>
+          <div style="margin-top: 14px; font-size: 1.0625rem; font-weight: 600;">Name the unknown</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Say what the letter stands for, in words, before touching any symbols.</p>
+        </div>
+        <div style="padding: 26px 24px; background: #fff;">
+          <div style="width: 28px; height: 28px; border-radius: 9999px; background: rgba(20,184,166,0.12); color: #0f766e; font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; justify-content: center;">2</div>
+          <div style="margin-top: 14px; font-size: 1.0625rem; font-weight: 600;">Translate the phrases</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Map each piece of English to a fragment of algebra. One phrase at a time.</p>
+        </div>
+        <div style="padding: 26px 24px; background: #fff;">
+          <div style="width: 28px; height: 28px; border-radius: 9999px; background: rgba(20,184,166,0.12); color: #0f766e; font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; justify-content: center;">3</div>
+          <div style="margin-top: 14px; font-size: 1.0625rem; font-weight: 600;">Assemble</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Snap the fragments together into the expression the question is asking for.</p>
+        </div>
+        <div style="padding: 26px 24px; background: #fff;">
+          <div style="width: 28px; height: 28px; border-radius: 9999px; background: rgba(20,184,166,0.12); color: #0f766e; font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; justify-content: center;">4</div>
+          <div style="margin-top: 14px; font-size: 1.0625rem; font-weight: 600;">Check against the choices</div>
+          <p style="margin: 8px 0 0; font-size: 0.9375rem; line-height: 1.55; color: rgba(0,0,0,0.62);">Find your expression among A–D, and see why the other three are there.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer style="border-top: 1px solid rgba(0,0,0,0.1); background: #fff;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; font-size: 0.875rem; color: rgba(0,0,0,0.45);">
+        <div>TSIA Coach · Built on the MathTabla scaffold system</div>
+        <div style="display: flex; gap: 24px;">
+          <a href="#" style="color: inherit;" style-hover="color: rgba(0,0,0,0.88);">Accessibility</a>
+          <a href="#" style="color: inherit;" style-hover="color: rgba(0,0,0,0.88);">Privacy</a>
+          <a href="#" style="color: inherit;" style-hover="color: rgba(0,0,0,0.88);">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+  <div>
+    <div style="height: 2px; background: linear-gradient(90deg, #567daf 0%, rgba(20,184,166,0.6) 50%, transparent 100%);"></div>
+    <header style="background: #fff; border-bottom: 1px solid rgba(0,0,0,0.1);">
+      <div style="max-width: 1440px; margin: 0 auto; padding: 0 24px; min-height: 60px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="display: flex; align-items: baseline; gap: 2px;">
+            <span style="font-size: 1rem; font-weight: 600;">TSIA</span>
+            <span style="font-size: 1rem; font-weight: 600; color: #0d9488;">Coach</span>
+          </div>
+          <div style="width: 1px; height: 20px; background: rgba(0,0,0,0.1);"></div>
+          <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: #567daf;">Internal · Agent console</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 7px; font-size: 0.8125rem; color: rgba(0,0,0,0.62);">
+            <span style="width: 7px; height: 7px; border-radius: 9999px; background: #16a34a;"></span>
+            Foundry · eastus2
+          </div>
+          <div style="width: 28px; height: 28px; border-radius: 9999px; background: rgba(86,125,175,0.16); color: #334f76; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; justify-content: center;">CA</div>
+        </div>
+      </div>
+      <div style="max-width: 1440px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; gap: 4px;">
+        <button onClick="{{ tabPlayground }}" style="{{ tPlayground }}">Playground</button>
+        <button onClick="{{ tabRuns }}" style="{{ tRuns }}">Agent runs</button>
+        <button onClick="{{ tabConfig }}" style="{{ tConfig }}">Prompts &amp; models</button>
+      </div>
+    </header>
+
+    <sc-if value="{{ onPlayground }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width: 1440px; margin: 0 auto; padding: 24px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+
+      <div style="flex: 1 1 300px; max-width: 340px; min-width: 0; display: grid; gap: 16px;">
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 18px;">
+          <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">Deployment</div>
+          <div style="position: relative; margin-top: 12px;">
+            <button onClick="{{ toggleModel }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; background: #fff; border: 1px solid rgba(0,0,0,0.18); border-radius: 8px; padding: 10px 12px; cursor: pointer; transition: border-color 140ms;" style-hover="border-color: #14b8a6">
+              <span style="display: grid; gap: 2px;">
+                <span style="font-size: 0.9375rem; font-weight: 600;">{{ model.displayName }}</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: rgba(0,0,0,0.45);">{{ model.name }}</span>
+              </span>
+              <span style="color: rgba(0,0,0,0.45); font-size: 0.75rem;">▾</span>
+            </button>
+
+            <sc-if value="{{ modelOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; z-index: 60; top: calc(100% + 6px); left: 0; right: 0; max-height: 420px; overflow-y: auto; background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,0.15); padding: 6px;">
+              <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+                <div>
+                  <div style="padding: 9px 10px 5px; font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(0,0,0,0.45);">{{ g.provider }}</div>
+                  <sc-for list="{{ g.items }}" as="m" hint-placeholder-count="2">
+                    <button onClick="{{ m.pick }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; text-align: left; background: transparent; border: none; border-radius: 8px; padding: 8px 10px; cursor: pointer;" style-hover="background: rgba(20,184,166,0.08)">
+                      <span style="display: grid; gap: 2px; min-width: 0;">
+                        <span style="font-size: 0.875rem; font-weight: 500;">{{ m.displayName }}</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: rgba(0,0,0,0.45); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ m.meta }}</span>
+                      </span>
+                      <span style="flex: none; font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 4px; padding: 2px 6px; background: {{ m.badgeBg }}; color: {{ m.badgeFg }};">{{ m.badge }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+          </div>
+
+          <sc-if value="{{ deprecated }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; gap: 10px; margin-top: 12px; background: rgba(249,115,82,0.1); border: 1px solid rgba(249,115,82,0.4); border-radius: 8px; padding: 10px 12px;">
+            <span style="color: #c94831; font-size: 0.875rem; line-height: 1.4;">⚠</span>
+            <div style="font-size: 0.8125rem; line-height: 1.45; color: #a13c2c;">This deployment is deprecated. Retirement is scheduled — move traffic to a GA deployment before shipping.</div>
+          </div>
+          </sc-if>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;">
+            <sc-for list="{{ model.features }}" as="f" hint-placeholder-count="3">
+              <span style="font-size: 0.6875rem; font-weight: 500; color: rgba(0,0,0,0.62); background: #f1f3f5; border-radius: 4px; padding: 3px 7px;">{{ f }}</span>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 18px;">
+          <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">System prompt</div>
+          <div style="margin-top: 12px; background: #f7f7f8; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 11px 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.6; color: rgba(0,0,0,0.62); min-height: 132px;">You are the Tutor agent for TSIA Coach. The student is mid-phase in a scaffolded walkthrough. Answer only the phase in front of them. Never give the final answer. Return one hint, at most two sentences.</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 0.75rem; color: rgba(0,0,0,0.45);">
+            <span style="font-family: 'JetBrains Mono', monospace;">tutor/hint · v7</span>
+            <a href="#" style="font-weight: 500;">Edit in prompts →</a>
+          </div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 18px; display: grid; gap: 16px;">
+          <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">Parameters</div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.875rem;"><span style="color: rgba(0,0,0,0.62);">Temperature</span><span style="font-family: 'JetBrains Mono', monospace;">0.3</span></div>
+            <div style="height: 4px; border-radius: 9999px; background: rgba(0,0,0,0.1); margin-top: 8px;"><div style="width: 30%; height: 4px; border-radius: 9999px; background: #14b8a6;"></div></div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.875rem;"><span style="color: rgba(0,0,0,0.62);">Max output tokens</span><span style="font-family: 'JetBrains Mono', monospace;">1024</span></div>
+            <div style="height: 4px; border-radius: 9999px; background: rgba(0,0,0,0.1); margin-top: 8px;"><div style="width: 52%; height: 4px; border-radius: 9999px; background: #14b8a6;"></div></div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <span style="font-size: 0.875rem; color: rgba(0,0,0,0.62);">Structured output</span>
+            <span style="width: 36px; height: 20px; border-radius: 9999px; background: #14b8a6; display: flex; align-items: center; justify-content: flex-end; padding: 2px;"><span style="width: 16px; height: 16px; border-radius: 9999px; background: #fff;"></span></span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <span style="font-size: 0.875rem; color: rgba(0,0,0,0.62);">Stream</span>
+            <span style="width: 36px; height: 20px; border-radius: 9999px; background: rgba(0,0,0,0.14); display: flex; align-items: center; padding: 2px;"><span style="width: 16px; height: 16px; border-radius: 9999px; background: #fff;"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 999 1 420px; min-width: 0; background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; min-height: 640px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid rgba(0,0,0,0.1);">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 0.9375rem; font-weight: 600;">Session</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(0,0,0,0.45);">sess_8f21c4 · item 2 · phase 2</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button style="font-size: 0.8125rem; font-weight: 500; color: rgba(0,0,0,0.62); background: transparent; border: 1px solid rgba(0,0,0,0.18); border-radius: 8px; padding: 6px 12px; cursor: pointer;" style-hover="border-color: #14b8a6; background: rgba(20,184,166,0.08)">Attach item</button>
+            <button style="font-size: 0.8125rem; font-weight: 500; color: rgba(0,0,0,0.62); background: transparent; border: 1px solid rgba(0,0,0,0.18); border-radius: 8px; padding: 6px 12px; cursor: pointer;" style-hover="border-color: #14b8a6; background: rgba(20,184,166,0.08)">Clear</button>
+          </div>
+        </div>
+
+        <div style="padding: 24px 28px; display: grid; gap: 22px; align-content: start;">
+          <div style="display: grid; gap: 6px; justify-items: end;">
+            <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(0,0,0,0.45);">Student</div>
+            <div style="max-width: min(62%, 460px); background: rgba(20,184,166,0.1); border: 1px solid rgba(20,184,166,0.35); border-radius: 12px; padding: 12px 15px; font-size: 0.9375rem; line-height: 1.55;">I don't get where the 3 goes. Is it 3(2w) or 2w + 3?</div>
+          </div>
+
+          <div style="display: grid; gap: 6px;">
+            <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(0,0,0,0.45);">Tutor · {{ model.displayName }}</div>
+            <div style="max-width: min(72%, 560px); background: #f7f7f8; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 12px 15px; font-size: 0.9375rem; line-height: 1.55;">Read the phrase left to right and hold the order: “three more than” tells you something gets added at the end. What does “twice the number” give you on its own, before the three shows up?</div>
+            <div style="display: flex; gap: 14px; margin-top: 2px; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: rgba(0,0,0,0.45);">
+              <span>1.24s</span><span>412 in · 58 out</span><span>$0.0021</span>
+            </div>
+          </div>
+
+          <div style="display: grid; gap: 8px; background: #fff; border: 1px dashed rgba(0,0,0,0.18); border-radius: 12px; padding: 14px 16px;">
+            <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(0,0,0,0.45);">Structured output</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.7; color: rgba(0,0,0,0.62); white-space: pre; min-width: 0; overflow-x: auto;">{
+  "hint": "…",
+  "revealsAnswer": false,
+  "phase": 2,
+  "misconception": "order-of-operations-in-translation"
+}</div>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid rgba(0,0,0,0.1); padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+          <div style="flex: 1; background: #f7f7f8; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 11px 13px; font-size: 0.9375rem; color: rgba(0,0,0,0.45);">Send a message as the student…</div>
+          <button style="font-size: 0.9375rem; font-weight: 600; color: #fff; background: #14b8a6; border: none; border-radius: 8px; padding: 11px 20px; cursor: pointer;" style-hover="background: #0d9488">Run</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ onRuns }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width: 1440px; margin: 0 auto; padding: 24px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+      <div style="flex: 1 1 260px; max-width: 300px; min-width: 0; background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 14px;">
+        <div style="padding: 4px 6px 10px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">Agents</div>
+        <div style="display: grid; gap: 4px;">
+          <div style="background: rgba(20,184,166,0.08); border: 1px solid #14b8a6; border-radius: 8px; padding: 10px 12px;">
+            <div style="font-size: 0.9375rem; font-weight: 600;">Scaffold Author</div>
+            <div style="font-size: 0.8125rem; color: rgba(0,0,0,0.62); margin-top: 2px;">Writes phases for an item</div>
+          </div>
+          <div style="border: 1px solid transparent; border-radius: 8px; padding: 10px 12px; cursor: pointer;" style-hover="background: #f1f3f5">
+            <div style="font-size: 0.9375rem; font-weight: 500;">Tutor</div>
+            <div style="font-size: 0.8125rem; color: rgba(0,0,0,0.62); margin-top: 2px;">Live hints inside a phase</div>
+          </div>
+        </div>
+        <div style="height: 1px; background: rgba(0,0,0,0.1); margin: 14px 0;"></div>
+        <div style="padding: 0 6px 8px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45);">Recent runs</div>
+        <div style="display: grid; gap: 2px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; gap: 8px; padding: 7px 8px; border-radius: 6px; background: #f1f3f5;"><span>run_4c1e</span><span style="color: #16a34a;">ok</span></div>
+          <div style="display: flex; justify-content: space-between; gap: 8px; padding: 7px 8px; border-radius: 6px; color: rgba(0,0,0,0.62); cursor: pointer;" style-hover="background: #f1f3f5"><span>run_4c1d</span><span style="color: #16a34a;">ok</span></div>
+          <div style="display: flex; justify-content: space-between; gap: 8px; padding: 7px 8px; border-radius: 6px; color: rgba(0,0,0,0.62); cursor: pointer;" style-hover="background: #f1f3f5"><span>run_4c1a</span><span style="color: #dc2626;">fail</span></div>
+        </div>
+      </div>
+
+      <div style="flex: 999 1 480px; min-width: 0; display: grid; gap: 16px;">
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 20px 22px;">
+          <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 24px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Scaffold Author</h3>
+                <span style="font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 4px; padding: 2px 6px; background: rgba(22,163,74,0.12); color: #15803d;">completed</span>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(0,0,0,0.45); margin-top: 6px;">run_4c1e · gpt-5.6-sol · started 14:02:11 · 6.8s</div>
+            </div>
+            <div style="display: flex; gap: 26px; text-align: right;">
+              <div>
+                <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(0,0,0,0.45);">Tokens</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.125rem; margin-top: 4px;">3,410 / 1,120</div>
+              </div>
+              <div>
+                <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(0,0,0,0.45);">Est. cost</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.125rem; margin-top: 4px; color: #0d9488;">$0.0143</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 20px 22px;">
+          <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(0,0,0,0.45); margin-bottom: 6px;">Step timeline · 5 steps</div>
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+            <div style="display: grid; grid-template-columns: 20px 1fr; gap: 14px;">
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <div style="width: 9px; height: 9px; border-radius: 9999px; margin-top: 17px; flex: none; background: {{ s.dot }};"></div>
+                <div style="width: 1px; flex: 1 1 auto; min-height: 8px; background: rgba(0,0,0,0.1);"></div>
+              </div>
+              <div style="padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.06);">
+                <button onClick="{{ s.toggle }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: transparent; border: none; padding: 0; cursor: pointer; text-align: left;">
+                  <span style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: {{ s.kindColor }}; background: {{ s.kindBg }}; border-radius: 4px; padding: 2px 6px; flex: none;">{{ s.kind }}</span>
+                    <span style="font-size: 0.9375rem; font-weight: 500;">{{ s.title }}</span>
+                  </span>
+                  <span style="display: flex; align-items: center; gap: 14px; flex: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(0,0,0,0.45);">
+                    <span>{{ s.dur }}</span>
+                    <span style="color: rgba(0,0,0,0.3);">{{ s.chev }}</span>
+                  </span>
+                </button>
+                <sc-if value="{{ s.open }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 12px; background: #f7f7f8; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 12px 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.7; color: rgba(0,0,0,0.62); white-space: pre-wrap;">{{ s.body }}</div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ onConfig }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width: 1440px; margin: 0 auto; padding: 24px; display: grid; gap: 16px;">
+      <div style="background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow-x: auto;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid rgba(0,0,0,0.1);">
+          <div>
+            <h3 style="margin: 0; font-size: 1.125rem; font-weight: 600;">Foundry deployments</h3>
+            <div style="font-size: 0.875rem; color: rgba(0,0,0,0.62); margin-top: 3px;">Mirrors <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem;">FoundryDeployments.All</span> on the server.</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 9px; font-size: 0.875rem; color: rgba(0,0,0,0.62);">
+            <span style="width: 34px; height: 20px; border-radius: 9999px; background: rgba(0,0,0,0.14); display: flex; align-items: center; padding: 2px;"><span style="width: 16px; height: 16px; border-radius: 9999px; background: #fff;"></span></span>
+            Hide deprecated
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr) minmax(0,0.7fr) minmax(0,0.8fr) minmax(0,1.6fr); min-width: 760px; gap: 0; font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(0,0,0,0.45); padding: 10px 22px; background: #f7f7f8; border-bottom: 1px solid rgba(0,0,0,0.1);">
+          <div>Deployment</div><div>Version</div><div>Provider</div><div>Lifecycle</div><div>Features</div>
+        </div>
+        <sc-for list="{{ table }}" as="r" hint-placeholder-count="6">
+          <div style="display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr) minmax(0,0.7fr) minmax(0,0.8fr) minmax(0,1.6fr); min-width: 760px; gap: 0; align-items: center; padding: 12px 22px; border-bottom: 1px solid rgba(0,0,0,0.06);" style-hover="background: #f7f7f8">
+            <div>
+              <div style="font-size: 0.9375rem; font-weight: 500;">{{ r.displayName }}</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: rgba(0,0,0,0.45);">{{ r.name }}</div>
+            </div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: rgba(0,0,0,0.62);">{{ r.version }}</div>
+            <div style="font-size: 0.875rem; color: rgba(0,0,0,0.62);">{{ r.provider }}</div>
+            <div><span style="font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 4px; padding: 2px 6px; background: {{ r.badgeBg }}; color: {{ r.badgeFg }};">{{ r.badge }}</span></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+              <sc-for list="{{ r.features }}" as="f" hint-placeholder-count="2">
+                <span style="font-size: 0.6875rem; color: rgba(0,0,0,0.62); background: #f1f3f5; border-radius: 4px; padding: 2px 6px;">{{ f }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;landing&quot;,&quot;admin&quot;],&quot;default&quot;:&quot;landing&quot;,&quot;tsType&quot;:&quot;'landing' | 'admin'&quot;},&quot;adminTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;playground&quot;,&quot;runs&quot;,&quot;config&quot;],&quot;default&quot;:&quot;playground&quot;,&quot;tsType&quot;:&quot;'playground' | 'runs' | 'config'&quot;},&quot;hideDeprecated&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const LIFECYCLE = {
+  GA:        { badge: 'GA',         bg: 'rgba(20,184,166,0.14)',  fg: '#0f766e' },
+  Preview:   { badge: 'Preview',    bg: 'rgba(245,158,11,0.16)',  fg: '#b45309' },
+  Legacy:    { badge: 'Legacy',     bg: 'rgba(100,116,139,0.16)', fg: '#475569' },
+  Deprecated:{ badge: 'Deprecated', bg: 'rgba(249,115,82,0.16)',  fg: '#c94831' },
+};
+
+const CATALOG = [
+  { provider: 'OpenAI', items: [
+    { name: 'gpt-5.6-sol', displayName: 'GPT 5.6 Sol', version: '2026-07-09', life: 'GA', features: ['reasoning', 'tool calling', 'structured output', 'file input', 'computer use'] },
+    { name: 'gpt-5-chat', displayName: 'GPT 5 Chat', version: '2026-05-05', life: 'Preview', features: ['reasoning', 'tool calling', 'structured output'] },
+    { name: 'gpt-5-nano', displayName: 'GPT 5 Nano', version: '2025-08-07', life: 'GA', features: ['reasoning', 'tool calling', 'structured output'] },
+    { name: 'gpt-4.1', displayName: 'GPT 4.1', version: '2025-04-14', life: 'Legacy', features: ['tool calling', 'structured output'] },
+  ]},
+  { provider: 'Anthropic', items: [
+    { name: 'claude-opus-5', displayName: 'Claude Opus 5', version: '2', life: 'GA', features: ['text'] },
+    { name: 'claude-sonnet-4-5', displayName: 'Claude Sonnet 4.5', version: '20250929', life: 'GA', features: ['reasoning', 'tool calling', 'file input', 'computer use'] },
+    { name: 'claude-sonnet-4-5-2', displayName: 'Claude Sonnet 4.5 Secondary', version: '20250929', life: 'GA', features: ['reasoning', 'tool calling', 'file input', 'computer use'] },
+  ]},
+  { provider: 'DeepSeek', items: [
+    { name: 'DeepSeek-V4-Pro', displayName: 'DeepSeek V4 Pro', version: '2026-04-23', life: 'GA', features: ['reasoning', 'json output'] },
+    { name: 'DeepSeek-R1-0528', displayName: 'DeepSeek R1 0528', version: '1', life: 'Deprecated', features: ['reasoning'] },
+  ]},
+  { provider: 'Embeddings', items: [
+    { name: 'text-embedding-3-small', displayName: 'Text Embedding 3 Small', version: '1', life: 'GA', features: ['embedding'] },
+    { name: 'text-embedding-3-large-919921', displayName: 'Text Embedding 3 Large', version: '1', life: 'GA', features: ['embedding'] },
+  ]},
+];
+
+const STEPS = [
+  { kind: 'plan', title: 'Read item 2 and identify the unknown', dur: '0.42s', ok: true,
+    body: 'unknown: w = loaves sold last year\ntarget: expression for loaves sold next year\nreporting category: algebraic reasoning' },
+  { kind: 'tool', title: 'getItem("staar-2025-02")', dur: '0.11s', ok: true,
+    body: '{\n  "id": "staar-2025-02",\n  "stem": "Last year, a bakery sold w loaves…",\n  "choices": ["2w + 3", "4w + 6", "2(w + 3)", "4w + 3"],\n  "key": "B"\n}' },
+  { kind: 'model', title: 'Translate phrases to algebra fragments', dur: '2.90s', ok: true,
+    body: '"loaves sold last year"      → w\n"twice the number"           → 2w\n"three more than twice"      → 2w + 3\n"twice the number this year" → 2(2w + 3) = 4w + 6' },
+  { kind: 'tool', title: 'validateExpression("4w + 6", key: "B")', dur: '0.08s', ok: true,
+    body: '{ "valid": true, "matchesKey": true, "distractorsExplained": 3 }' },
+  { kind: 'model', title: 'Emit 4 phases + distractor rationales', dur: '3.24s', ok: true,
+    body: 'phases: [name-the-unknown, translate, assemble, check-choices]\ndistractors:\n  A 2w + 3   → stopped at this year\n  C 2(w + 3) → grouped before doubling\n  D 4w + 3   → doubled the 3 away' },
+];
+
+const KIND = {
+  plan:  { color: '#334f76', bg: 'rgba(86,125,175,0.14)' },
+  tool:  { color: '#b45309', bg: 'rgba(245,158,11,0.16)' },
+  model: { color: '#0f766e', bg: 'rgba(20,184,166,0.14)' },
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      screen: props.screen || 'landing',
+      tab: props.adminTab || 'playground',
+      modelOpen: false,
+      modelName: 'gpt-5.6-sol',
+      openStep: 2,
+    };
+  }
+
+  flat() { return CATALOG.flatMap(g => g.items); }
+
+  pill(active) {
+    return 'font-size: 0.875rem; font-weight: 600; border: none; border-radius: 9999px; padding: 8px 18px; cursor: pointer; transition: background 140ms, color 140ms; '
+      + (active ? 'background: #14b8a6; color: #fff;' : 'background: transparent; color: rgba(0,0,0,0.62);');
+  }
+
+  tab(active) {
+    return 'font-size: 0.9375rem; font-weight: 500; background: transparent; border: none; border-bottom: 2px solid ' + (active ? '#14b8a6' : 'transparent')
+      + '; color: ' + (active ? 'rgba(0,0,0,0.88)' : 'rgba(0,0,0,0.62)')
+      + '; padding: 12px 14px; margin-bottom: -1px; cursor: pointer; transition: color 140ms, border-color 140ms;';
+  }
+
+  decorate(m) {
+    const l = LIFECYCLE[m.life];
+    return Object.assign({}, m, {
+      badge: l.badge, badgeBg: l.bg, badgeFg: l.fg,
+      meta: m.name + ' · ' + m.version,
+      pick: () => this.setState({ modelName: m.name, modelOpen: false }),
+    });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const hideDep = this.props.hideDeprecated ?? false;
+    const model = this.flat().find(m => m.name === s.modelName) || this.flat()[0];
+
+    const groups = CATALOG.map(g => ({
+      provider: g.provider,
+      items: g.items.filter(m => !(hideDep && m.life === 'Deprecated')).map(m => this.decorate(m)),
+    })).filter(g => g.items.length);
+
+    return {
+      isLanding: s.screen === 'landing',
+      isAdmin: s.screen === 'admin',
+      goLanding: () => this.setState({ screen: 'landing' }),
+      goAdmin: () => this.setState({ screen: 'admin' }),
+      swLanding: this.pill(s.screen === 'landing'),
+      swAdmin: this.pill(s.screen === 'admin'),
+
+      onPlayground: s.tab === 'playground',
+      onRuns: s.tab === 'runs',
+      onConfig: s.tab === 'config',
+      tabPlayground: () => this.setState({ tab: 'playground', modelOpen: false }),
+      tabRuns: () => this.setState({ tab: 'runs', modelOpen: false }),
+      tabConfig: () => this.setState({ tab: 'config', modelOpen: false }),
+      tPlayground: this.tab(s.tab === 'playground'),
+      tRuns: this.tab(s.tab === 'runs'),
+      tConfig: this.tab(s.tab === 'config'),
+
+      groups,
+      model,
+      modelOpen: s.modelOpen,
+      deprecated: model.life === 'Deprecated',
+      toggleModel: () => this.setState(p => ({ modelOpen: !p.modelOpen })),
+
+      table: this.flat().filter(m => !(hideDep && m.life === 'Deprecated')).map(m => this.decorate(m)),
+
+      steps: STEPS.map((st, i) => ({
+        kind: st.kind,
+        kindColor: KIND[st.kind].color,
+        kindBg: KIND[st.kind].bg,
+        dot: st.ok ? '#14b8a6' : '#dc2626',
+        title: st.title,
+        dur: st.dur,
+        body: st.body,
+        open: s.openStep === i,
+        chev: s.openStep === i ? '▴' : '▾',
+        toggle: () => this.setState(p => ({ openStep: p.openStep === i ? -1 : i })),
+      })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
