@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.4.6" />
-    <PackageReference Include="Aspire.Hosting.Redis" Version="13.4.6" />
-     <ProjectReference Include="..\TsiaCoach.Shared\TsiaCoach.Shared.csproj" 
-      IsAspireProjectResource="false"/>
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.*" />
+    <PackageReference Include="Aspire.Hosting.Redis" Version="13.*" />
+    <PackageReference Include="Scalar.Aspire" Version="0.11.*" />
+     <ProjectReference Include="..\TsiaCoach.Shared\TsiaCoach.Shared.csproj" IsAspireProjectResource="false" />
   </ItemGroup>
 </Project>

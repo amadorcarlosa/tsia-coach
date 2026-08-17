@@ -65,19 +65,19 @@ export default async function WeatherPage() {
           <div className="grid gap-2 text-sm">
             <div className="flex justify-between">
               <span className="text-ink-sub">Endpoint</span>
-              <code className="text-xs text-ink-muted" style={{ fontFamily: "var(--font-code)" }}>
+              <code className="font-mono text-xs text-ink-muted">
                 GET /api/weatherforecast
               </code>
             </div>
             <div className="flex justify-between">
               <span className="text-ink-sub">Cache</span>
-              <code className="text-xs text-ink-muted" style={{ fontFamily: "var(--font-code)" }}>
+              <code className="font-mono text-xs text-ink-muted">
                 Redis output cache · 5s TTL
               </code>
             </div>
             <div className="flex justify-between">
               <span className="text-ink-sub">Rendering</span>
-              <code className="text-xs text-ink-muted" style={{ fontFamily: "var(--font-code)" }}>
+              <code className="font-mono text-xs text-ink-muted">
                 Server component · no-store fetch
               </code>
             </div>

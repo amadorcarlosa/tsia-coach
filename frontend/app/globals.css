@@ -169,4 +169,48 @@
     border-radius: var(--mt-radius-2xl);
     box-shadow: var(--mt-shadow-lg);
   }
+
+  /*
+   * ─── Track definitions ───
+   * Column tracks and flex ratios Tailwind's scale can't express. They live
+   * here rather than in a `style` prop so the values ship in the stylesheet
+   * and stay overridable by utilities. Pair each with `grid` / `flex`.
+   */
+
+  /* Hero: prose column beside the scaffold board, stacking under ~400px each. */
+  .mt-tracks-hero {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  }
+
+  /* Reporting-category cards. */
+  .mt-tracks-areas {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+
+  /* Phase cards — wider minimum than the area cards, and hairline-separated
+     by the parent's background showing through a 1px gap. */
+  .mt-tracks-phases {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  }
+
+  /* Phrase row: label · arrow · fixed-width expression chip. */
+  .mt-tracks-phrase-row {
+    grid-template-columns: 1fr auto 128px;
+  }
+
+  /* Deployment table — header and body rows share one track definition. */
+  .mt-tracks-deployments {
+    grid-template-columns:
+      minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 0.7fr)
+      minmax(0, 0.8fr) minmax(0, 1.6fr);
+  }
+
+  /*
+   * Console splits: the aside sits at its basis, the main pane takes
+   * essentially all the free space, and both wrap once the row is too narrow.
+   */
+  .mt-runs-aside       { flex: 1 1 260px; }
+  .mt-runs-main        { flex: 999 1 480px; }
+  .mt-playground-aside { flex: 1 1 300px; }
+  .mt-playground-main  { flex: 999 1 420px; }
 }

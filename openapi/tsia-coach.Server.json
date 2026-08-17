@@ -28,6 +28,49 @@
         }
       }
     },
+    "/api/agents/{agentName}/invoke": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "operationId": "InvokeAgent",
+        "parameters": [
+          {
+            "name": "agentName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvokeAgentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvokeAgentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/api/weatherforecast": {
       "get": {
         "tags": [
@@ -134,6 +177,62 @@
           "Realtime"
         ]
       },
+      "InvokeAgentRequest": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "InvokeAgentResponse": {
+        "required": [
+          "replyText",
+          "inputTokens",
+          "outputTokens",
+          "latencyMs",
+          "responseId"
+        ],
+        "type": "object",
+        "properties": {
+          "replyText": {
+            "type": "string"
+          },
+          "inputTokens": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "outputTokens": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "latencyMs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "responseId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "ModelApi": {
         "enum": [
           "Responses",
@@ -226,6 +325,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Agents"
+    },
     {
       "name": "Models"
     },

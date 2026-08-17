@@ -44,7 +44,7 @@ export default function WeatherForecastList({
           className="mt-panel flex items-center justify-between gap-4 px-5 py-4 transition-all hover:border-primary-500"
         >
           <div className="flex items-center gap-4">
-            <div className="w-16 text-right text-3xl font-semibold tracking-tight" style={{ fontFamily: "var(--font-code)" }}>
+            <div className="w-16 text-right font-mono text-3xl font-semibold tracking-tight">
               {f.temperatureC}°
             </div>
             <div className="h-10 w-px bg-edge" />

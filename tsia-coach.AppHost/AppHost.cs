@@ -2,6 +2,7 @@ using Json.More;
 using static TsiaCoach.AppHost.Config;
 using Shared = TsiaCoach.Shared.Config;
 using System.Text.Json;
+using Scalar.Aspire;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -29,7 +30,13 @@ var webfrontend = builder.AddNextJsApp(Next.ProjectName,
     .WaitFor(server)
     .WithExternalHttpEndpoints();
 
-
+var scalar = builder.AddScalarApiReference(options =>
+{
+    options.WithTheme(ScalarTheme.Purple)
+    .PreferHttpsEndpoint()
+    .AllowSelfSignedCertificates();
+});
+scalar.WithApiReference(server, endpointName: "https");
 
 
 

@@ -62,10 +62,7 @@ function PhraseRow({
     : "border border-edge bg-bg-elevated/86 rounded-xl px-3.5 py-2.5";
 
   return (
-    <div
-      className={`grid items-center gap-3.5 ${wrapperClass}`}
-      style={{ gridTemplateColumns: "1fr auto 128px" }}
-    >
+    <div className={`mt-tracks-phrase-row grid items-center gap-3.5 ${wrapperClass}`}>
       <span className={`text-sm ${active ? "font-medium text-ink" : "text-ink-sub"}`}>
         {label}
       </span>

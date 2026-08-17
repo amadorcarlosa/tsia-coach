@@ -25,10 +25,7 @@ export default function Home() {
 
       {/* ─── Hero ─── */}
       <section className="w-full mx-auto max-w-page px-6 pt-20 pb-16">
-        <div
-          className="grid gap-14 items-center"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 400px), 1fr))" }}
-        >
+        <div className="mt-tracks-hero grid gap-14 items-center">
           <div>
             <div className="mt-eyebrow mb-5">TSIA2 · College readiness math</div>
             <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-none">
@@ -96,10 +93,7 @@ export default function Home() {
         <h2 className="mt-3.5 text-3xl font-semibold tracking-tight leading-snug">
           Twenty questions. Four reporting categories.
         </h2>
-        <div
-          className="mt-8 grid gap-4"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))" }}
-        >
+        <div className="mt-tracks-areas mt-8 grid gap-4">
           {AREAS.map((a) => (
             <div key={a.num} className="mt-panel p-5 transition-all hover:border-primary-500">
               <div className={`font-(--font-code) text-xs ${a.color}`}>{a.num}</div>
@@ -123,13 +117,7 @@ export default function Home() {
           doing.
         </p>
 
-        <div
-          className="mt-9 grid overflow-hidden rounded-xl border border-edge bg-edge"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 230px), 1fr))",
-            gap: "1px",
-          }}
-        >
+        <div className="mt-tracks-phases mt-9 grid gap-px overflow-hidden rounded-xl border border-edge bg-edge">
           {PHASES.map((p) => (
             <div key={p.n} className="bg-bg-elevated p-6">
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-500/12 text-sm font-semibold text-primary-700">

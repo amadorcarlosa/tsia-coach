@@ -3,13 +3,10 @@ using Microsoft.Agents.AI;
 using Shared = TsiaCoach.Shared.Config;
 using Azure.AI.Projects;
 using TsiaCoach.Server.AgentModel;
-using Azure.AI.OpenAI;
-
-using Microsoft.Extensions.AI;
 using TsiaCoach.Server;
-using Azure.Core;
 using TsiaCoach.Server.Endpoints;
 using System.Text.Json.Serialization;
+using TsiaCoach.Server.Tool;
 
 
 
@@ -25,16 +22,33 @@ builder.Services.AddOutputCache();
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
-if (Environment.GetEnvironmentVariable("TSIA_FOUNDRY_SMOKE") == "1")
-{
-    await RunFoundrySmokeAsync();
-}
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(
         new JsonStringEnumConverter()));
+
+builder.Services.AddSingleton(sp =>
+{
+    CredentialEnvironment credentialEnvironment =
+        builder.Environment.IsDevelopment()
+            ? new LocalDevelopment()
+            : new ManagedIdentity(
+                builder.Configuration["AZURE_CLIENT_ID"]
+                ?? throw new InvalidOperationException(
+                    "AZURE_CLIENT_ID is required in production."));
+
+    string projectEndpoint =
+        Environment.GetEnvironmentVariable(Shared.Azure.VariableName.ProjectEndpoint)
+        ?? throw new InvalidOperationException(
+            $"'{Shared.Azure.VariableName.ProjectEndpoint}' is not set.");
+
+    return new AIProjectClient(
+        new Uri(projectEndpoint),
+        credentialEnvironment.CreateCredential());
+});
 
 var app = builder.Build();
 
@@ -53,6 +67,7 @@ string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "
 
 var api = app.MapGroup("/api");
 api.MapModels();
+api.MapAgents();
 api.MapGet("weatherforecast", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
@@ -78,74 +93,5 @@ app.Logger.LogInformation("OpenAI Endpoint: {endpoint}", Environment.GetEnvironm
 
 app.Run();
 
-async Task RunFoundrySmokeAsync()
-{
-    CredentialEnvironment credentialEnvironment =
-        builder.Environment.IsDevelopment()
-            ? new LocalDevelopment()
-            : new ManagedIdentity(
-                builder.Configuration["AZURE_CLIENT_ID"]
-                ?? throw new InvalidOperationException(
-                    "AZURE_CLIENT_ID is required in production."));
-
-    TokenCredential tokenCredential =
-        credentialEnvironment.CreateCredential();
 
 
-    string azureOpenAIEndpoint = Environment.GetEnvironmentVariable(Shared.Azure.VariableName.OpenAIEndPoint)
-        ?? throw new InvalidOperationException(
-            $"Environment variable '{Shared.Azure.VariableName.OpenAIEndPoint}' is not set.");
-
-
-    string projectEndpoint =
-        Environment.GetEnvironmentVariable(Shared.Azure.VariableName.ProjectEndpoint)
-        ?? throw new InvalidOperationException(
-            $"Environment variable '{Shared.Azure.VariableName.ProjectEndpoint}' is not set.");
-
-
-    if (tokenCredential == null)
-    {
-        throw new InvalidOperationException(
-            "Failed to create AzureCliCredential. Ensure you are logged in via Azure CLI.");
-    }
-
-
-
-    AIAgent agent =
-        new AIProjectClient(
-            new Uri(projectEndpoint),
-            tokenCredential)
-        .AsAIAgent(
-            model: FoundryDeploymentCatalog.DeepSeek.V4Pro.Value,
-            name: "TestAgent",
-            instructions: "You are a helpful assistant. Be concise.");
-
-    var response = await agent.RunAsync(
-        "What are three places to visit in Providence?");
-
-    if (response == null)
-    {
-        throw new InvalidOperationException(
-            "Agent response was null. Ensure the agent is configured correctly.");
-    }
-
-    Console.WriteLine(
-        $"Agent response: {response.Text}");
-    IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator =
-        new AzureOpenAIClient(
-            new Uri(azureOpenAIEndpoint),
-            tokenCredential)
-        .GetEmbeddingClient(
-            FoundryDeploymentCatalog.Embeddings.Small3.Value)
-        .AsIEmbeddingGenerator();
-
-    ReadOnlyMemory<float> vector =
-        await embeddingGenerator.GenerateVectorAsync(response.Text);
-
-    Console.WriteLine($"Embedding dimensions: {vector.Length}");
-}
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
