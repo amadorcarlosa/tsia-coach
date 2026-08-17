@@ -8,7 +8,7 @@ using TsiaCoach.Server.Endpoints;
 using System.Text.Json.Serialization;
 using TsiaCoach.Server.Tool;
 
-
+AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
 
 var builder = WebApplication.CreateBuilder(args);
 

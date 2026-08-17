@@ -19,6 +19,7 @@ var server = builder.AddProject<Projects.tsia_coach_Server>(WebApiServer.Project
     .WithReference(cache)
     .WaitFor(cache)
     .WithHttpHealthCheck(WebApiServer.HealthPath)
+    .WithEnvironment("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true")
     .WithEnvironment(Shared.Azure.VariableName.OpenAIEndPoint, openAIEndpoint)
     .WithEnvironment(Shared.Azure.VariableName.ProjectEndpoint, projectEndpoint);
 

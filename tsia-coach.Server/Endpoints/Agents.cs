@@ -33,18 +33,23 @@ public static class Agents
                 return TypedResults.NotFound();
             }
 
-            var agent = projectClient.AsAIAgent(new ChatClientAgentOptions
-            {
-                Name = definition.Name.Value,
-                ChatOptions = new ChatOptions
+            var agent = projectClient.AsAIAgent(
+                new ChatClientAgentOptions
                 {
-                    ModelId = profile.Deployment.Value,
-                    Instructions = definition.Instructions,
-                    Tools = [..definition.Tools],
-                    Temperature = profile.Parameters.Temperature,
-                    MaxOutputTokens = profile.Parameters.MaxOutputTokens,
+                    Name = definition.Name.Value,
+                    ChatOptions = new ChatOptions
+                    {
+                        ModelId = profile.Deployment.Value,
+                        Instructions = definition.Instructions,
+                        Tools = [.. definition.Tools],
+                        Temperature = profile.Parameters.Temperature,
+                        MaxOutputTokens = profile.Parameters.MaxOutputTokens,
+                    },
                 },
-            });
+                clientFactory: chatClient => chatClient
+                    .AsBuilder()
+                    .UseOpenTelemetry()
+                    .Build());
 
             var stopwatch = Stopwatch.StartNew();
             AgentResponse response = await agent.RunAsync(request.Message);

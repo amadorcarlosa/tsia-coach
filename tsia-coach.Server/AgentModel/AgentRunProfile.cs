@@ -20,7 +20,7 @@ public static class AgentBindings
     public static readonly AgentRuntimeProfile WeatherForecaster = new(
         Agent: AgentNames.WeatherForecaster,
         Deployment: FoundryDeploymentCatalog.Gpt.Gpt5Nano,   // compiler-verified reference
-        Parameters: new(Temperature: 0.3f, MaxOutputTokens: 1024,
+        Parameters: new(Temperature: null, MaxOutputTokens: 1024,
                         StructuredOutput: true, Stream: false));
     public static readonly AgentRuntimeProfile Tutor = new(
      Agent: AgentNames.Tutor,
